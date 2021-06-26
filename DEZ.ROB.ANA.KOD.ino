@@ -1,0 +1,108 @@
+-  #define echoPin 12 //ultrasonic echo pini sensör
+- #define trigPin 13 //ultrasonic echo trig sensör
+- #define MotorR1 7
+- #define MotorR2 6
+- #define MotorRE 9 //pwmb
+- #define MotorL1 5
+- #define MotorL2 6
+- #define MotorLE 3 //pwmb
+- #define geri_git()
+- #define saga_git()
+- #define ileri_git()
+- #define motor_sag
+- 
+- long sure,uzaklik; 
+- 
+- void setup () {
+-   pinMode (echoPin,INPUT);
+-   pinMode (trigPin,OUTPUT);
+- 
+-   pinMode (MotorL1,OUTPUT);
+-   pinMode (MotorL2,OUTPUT);
+-   pinMode (MotorLE,OUTPUT);
+- 
+-   pinMode (MotorR1,OUTPUT);
+-   pinMode (MotorR2,OUTPUT);
+-   pinMode (MotorRE,OUTPUT);
+- 
+-   Serial.begin (9600);
+- }
+- void loop () {
+- 
+-   digitalWrite (trigPin,LOW);
+-   delayMicroseconds (5) ;
+-   digitalWrite (trigPin,HIGH);
+-   delayMicroseconds (10) ;
+-   digitalWrite (trigPin,LOW);
+- 
+-   sure = pulseIn(echoPin,HIGH);
+-   uzaklik = sure / 29.1 / 2 ;
+- 
+-    Serial.println(uzaklik)
+-    
+-    if (uzaklik<15)
+-    {
+-      geri_git();
+-      delay(150);
+-      saga_git();
+-      delay(200);
+-    }
+- 
+-    else {
+-     ileri_git(); 
+-    }  
+- }
+- 
+- void motor_sol (String dir, int spd){
+- 
+-   if (dir=="ileri")
+- 
+-   {
+-     digitalWrite (MotorL1,LOW);
+-     digitalWrite (MotorL2,HIGH);
+-     analogWrite (MotorLE, spd);
+-   }
+-   if (dir=="geri")
+-   {
+-     digitalWrite(MotorL1,HIGH);
+-     digitalWrite(MotorL2,LOW);
+-     analogWrite(MotorLE, spd);     
+-   }
+- 
+-   void motor_sag{
+- 
+-   if ("ileri")
+-   {
+-     digitalWrite (MotorR1,LOW);
+-     digitalWrite (MotorR2,HIGH);
+-     analogWrite (MotorRE, spd);     
+-   }
+-   if ("geri")
+-   {
+-     digitalWrite (MotorR1,HIGH);
+-     digitalWrite (MotorR2,LOW);
+-     analogWrite (MotorRE, spd);    
+-   }
+- 
+-   void ileri_git() 
+-   {
+-     motor_sol ("ileri", 200);
+-     motor_sag ("ileri", 200);    
+-   }
+- 
+-   void geri_git() 
+-   {
+-     motor_sol ("geri", 200);
+-     motor_sag ("geri", 200);    
+-   }
+-   void saga_git()
+-   {
+-     motor_sol ("geri", 200);
+-     motor_sag ("ileri", 200);    
+-   }
+-   void sola_git() 
+-   {
+-     motor_sol ("ileri", 200);
+-     motor_sag ("geri", 200);    
+-   } 
+- }
